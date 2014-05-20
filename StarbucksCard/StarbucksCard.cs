@@ -217,7 +217,7 @@ namespace StarbucksCard
 
     }
 
-    class StarHistory
+    public class StarHistory
     {
         public DateTime Date { get; set; }
         public int Stars { get; set; }
