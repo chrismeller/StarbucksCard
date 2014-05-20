@@ -108,10 +108,19 @@ namespace StarbucksCard
             }
         }
 
+        /// <summary>
+        /// All the rewards that have been earned, regardless of status (ie: redeemed, expired, etc.).
+        /// 
+        /// Be warned that this appears to sometimes have duplicates. My birthday reward is in the list twice, but UnredeemedRewards correctly shows only 1.
+        /// </summary>
+        public List<Reward> EarnedRewards { get; set; }
+
         public StarbucksCard(string username, string password)
         {
             this._username = username;
             this._password = password;
+
+            EarnedRewards = new List<Reward>();
         }
 
         public void Update()
@@ -175,6 +184,12 @@ namespace StarbucksCard
             var serializer = new JsonDeserializer();
             var history = serializer.Deserialize<List<StarHistory>>(restResponse);
 
+            // we're doing the same thing here
+            restResponse.Content = ParseValue(response, "customer_active_coupons");
+            var earnedRewards = serializer.Deserialize<List<Reward>>(restResponse);
+
+            EarnedRewards = earnedRewards;
+
         }
 
         private string ParseValue(string response, string key)
@@ -202,5 +217,33 @@ namespace StarbucksCard
         public DateTime Date { get; set; }
         public int Stars { get; set; }
         public string Type { get; set; }
+    }
+
+    public class Reward
+    {
+        /// <summary>
+        /// The type of voucher. So far seems to be "MSRPromotionalCoupon" for promotions or "MSREarnCoupon" for actual rewards.
+        /// </summary>
+        public string VoucherType { get; set; }
+        /// <summary>
+        /// The name of the coupon. Often this is cryptic ("Code 592-25% OFF FOOD"), but rewards make sense ("EARNED FREE DRINK" or "BIRTHDAY FREE BEVERAGE US").
+        /// </summary>
+        public string Name { get; set; }
+        /// <summary>
+        /// The actual code that is used in their system.
+        /// </summary>
+        public string CouponCode { get; set; }
+        /// <summary>
+        /// Obvious, the date the reward or coupon was issued.
+        /// </summary>
+        public DateTime DateIssued { get; set; }
+        /// <summary>
+        /// Obvious, the date the reward or coupon expires.
+        /// </summary>
+        public DateTime ExpirationDate { get; set; }
+        /// <summary>
+        /// The status of the reward. "Expired", "Redeemed", or "Available" seem to be used.
+        /// </summary>
+        public string Status { get; set; }
     }
 }
