@@ -29,7 +29,7 @@ namespace StarbucksCard
         /// <summary>
         /// The number of rewards not yet redeemed.
         /// </summary>
-        public int Rewards { get; set; }
+        public int UnredeemedRewards { get; set; }
 
         /// <summary>
         /// The current card balance.
@@ -142,7 +142,7 @@ namespace StarbucksCard
 
             CustomerName = ParseValue(response, "customer_full_name");
             Stars = Convert.ToInt16(ParseValue(response, "cumulative_star_balance"));
-            Rewards = Convert.ToInt16(ParseValue(response, "num_unredeemed_rewards"));
+            UnredeemedRewards = Convert.ToInt16(ParseValue(response, "num_unredeemed_rewards"));
             Balance = Convert.ToDecimal(ParseValue(response, "card_dollar_balance"));
 
             var updated = ParseValue(response, "card_balance_date") + " " + ParseValue(response, "card_balance_time");
