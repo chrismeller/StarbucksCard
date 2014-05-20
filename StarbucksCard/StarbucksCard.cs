@@ -115,12 +115,15 @@ namespace StarbucksCard
         /// </summary>
         public List<Reward> EarnedRewards { get; set; }
 
+        public List<StarHistory> StarHistory { get; set; }
+
         public StarbucksCard(string username, string password)
         {
             this._username = username;
             this._password = password;
 
             EarnedRewards = new List<Reward>();
+            StarHistory = new List<StarHistory>();
         }
 
         public void Update()
@@ -183,6 +186,8 @@ namespace StarbucksCard
 
             var serializer = new JsonDeserializer();
             var history = serializer.Deserialize<List<StarHistory>>(restResponse);
+
+            StarHistory = history;
 
             // we're doing the same thing here
             restResponse.Content = ParseValue(response, "customer_active_coupons");
