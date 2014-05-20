@@ -219,9 +219,22 @@ namespace StarbucksCard
 
     public class StarHistory
     {
+        /// <summary>
+        /// Date the star was earned.
+        /// </summary>
         public DateTime Date { get; set; }
+        /// <summary>
+        /// The number of stars earned.
+        /// </summary>
         public int Stars { get; set; }
+        /// <summary>
+        /// Type of event that earned the star(s). Most often it is "Purchases", but you get "Promotion", "GroceryPurchase", and "Bonus" as well.
+        /// </summary>
         public string Type { get; set; }
+        /// <summary>
+        /// A textual explanation. This is usually not populated, it looks like it may only show up on "Bonus" type entries. For example: "2 Bonus Star - Frappuccino"
+        /// </summary>
+        public string Title { get; set; }
     }
 
     public class Reward
