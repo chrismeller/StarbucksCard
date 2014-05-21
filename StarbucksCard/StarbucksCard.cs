@@ -22,9 +22,9 @@ namespace StarbucksCard
         public string CustomerName { get; set; }
 
         /// <summary>
-        /// The current number of stars.
+        /// The cumulative number of stars earned, presumably since you earned the latest level?
         /// </summary>
-        public int Stars { get; set; }
+        public int CumulativeStars { get; set; }
 
         /// <summary>
         /// The number of rewards not yet redeemed.
@@ -153,7 +153,7 @@ namespace StarbucksCard
         {
 
             CustomerName = ParseValue(response, "customer_full_name");
-            Stars = Convert.ToInt16(ParseValue(response, "cumulative_star_balance"));
+            CumulativeStars = Convert.ToInt16(ParseValue(response, "cumulative_star_balance"));
             UnredeemedRewards = Convert.ToInt16(ParseValue(response, "num_unredeemed_rewards"));
             Balance = Convert.ToDecimal(ParseValue(response, "card_dollar_balance"));
 
